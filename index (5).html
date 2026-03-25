@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>interlink | We design lifestyles through business.</title>
+<meta name="description" content="ビジネスを通じて、ライフスタイルをデザインする。株式会社interlinkは、Lifestyle・Wellness・Hospitality・Platformの4事業を通じて、人の可能性を最大化します。">
+<meta name="keywords" content="interlink, ライフスタイル, アパレル, ウェルネス, ホスピタリティ, プラットフォーム">
+<meta property="og:title" content="interlink | We design lifestyles through business.">
+<meta property="og:description" content="ビジネスを通じて、ライフスタイルをデザインする。">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Jost:wght@200;300;400;500&family=Noto+Sans+JP:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0a0a0a;
+    --white: #fafafa;
+    --gray-100: #f4f4f4;
+    --gray-200: #e8e8e8;
+    --gray-400: #aaaaaa;
+    --gray-600: #666666;
+    --gray-800: #333333;
+    --accent: #1a1a1a;
+    --font-display: 'Cormorant Garamond', serif;
+    --font-body: 'Jost', sans-serif;
+    --font-jp: 'Noto Sans JP', sans-serif;
+    --transition: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--white);
+    color: var(--black);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ======= LOADER ======= */
+  #loader {
+    position: fixed; inset: 0; background: var(--black); z-index: 9999;
+    display: flex; align-items: center; justify-content: center;
+    transition: opacity 0.8s var(--transition), visibility 0.8s;
+  }
+  #loader.hidden { opacity: 0; visibility: hidden; }
+  .loader-text {
+    font-family: var(--font-body); font-weight: 200; letter-spacing: 0.4em;
+    font-size: clamp(1rem, 2vw, 1.4rem); color: var(--white);
+    animation: loaderPulse 1.5s ease-in-out infinite;
+  }
+  @keyframes loaderPulse { 0%,100%{opacity:0.3} 50%{opacity:1} }
+
+  /* ======= NAV ======= */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    padding: 0 clamp(1.5rem, 4vw, 4rem);
+    display: flex; align-items: center; justify-content: space-between;
+    height: 72px;
+    transition: background 0.5s var(--transition), border-bottom 0.5s;
+  }
+  nav.scrolled {
+    background: rgba(250,250,250,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--gray-200);
+  }
+  nav.dark { background: transparent; }
+  .nav-logo {
+    font-family: var(--font-body); font-weight: 300; letter-spacing: 0.15em;
+    font-size: 1.1rem; color: var(--white); text-decoration: none;
+    transition: color 0.3s;
+  }
+  nav.scrolled .nav-logo { color: var(--black); }
+  .nav-links {
+    display: flex; align-items: center; gap: clamp(1.5rem, 3vw, 3rem);
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: var(--font-body); font-weight: 300; letter-spacing: 0.12em;
+    font-size: 0.75rem; text-transform: uppercase; text-decoration: none;
+    color: rgba(255,255,255,0.85); transition: color 0.3s;
+  }
+  nav.scrolled .nav-links a { color: var(--gray-600); }
+  .nav-links a:hover { color: var(--white); }
+  nav.scrolled .nav-links a:hover { color: var(--black); }
+
+  /* Language Selector */
+  .lang-selector {
+    position: relative;
+    font-family: var(--font-body); font-weight: 300; letter-spacing: 0.1em;
+    font-size: 0.72rem; text-transform: uppercase;
+    cursor: pointer;
+  }
+  .lang-current {
+    display: flex; align-items: center; gap: 6px;
+    color: rgba(255,255,255,0.85); transition: color 0.3s;
+    padding: 6px 10px; border: 1px solid rgba(255,255,255,0.3);
+  }
+  nav.scrolled .lang-current { color: var(--gray-600); border-color: var(--gray-300); }
+  .lang-current svg { width: 10px; height: 10px; transition: transform 0.3s; }
+  .lang-selector:hover .lang-current svg { transform: rotate(180deg); }
+  .lang-dropdown {
+    position: absolute; top: calc(100% + 8px); right: 0;
+    background: var(--white); border: 1px solid var(--gray-200);
+    min-width: 120px; opacity: 0; visibility: hidden;
+    transform: translateY(-8px); transition: all 0.25s var(--transition);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+  }
+  .lang-selector:hover .lang-dropdown { opacity: 1; visibility: visible; transform: translateY(0); }
+  .lang-dropdown a {
+    display: block; padding: 10px 16px;
+    font-family: var(--font-body); font-weight: 300; letter-spacing: 0.1em;
+    font-size: 0.72rem; color: var(--gray-600); text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+  }
+  .lang-dropdown a:hover { background: var(--gray-100); color: var(--black); }
+  .lang-dropdown a.active { color: var(--black); font-weight: 500; }
+
+  /* Hamburger */
+  .hamburger {
+    display: none; flex-direction: column; gap: 5px; cursor: pointer;
+    padding: 4px; background: none; border: none;
+  }
+  .hamburger span {
+    display: block; width: 24px; height: 1px; background: var(--white);
+    transition: all 0.3s var(--transition);
+  }
+  nav.scrolled .hamburger span { background: var(--black); }
+  .hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+  /* Mobile Menu */
+  .mobile-menu {
+    position: fixed; inset: 0; background: var(--black); z-index: 999;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 2.5rem; opacity: 0; visibility: hidden;
+    transition: all 0.5s var(--transition);
+  }
+  .mobile-menu.open { opacity: 1; visibility: visible; }
+  .mobile-menu a {
+    font-family: var(--font-body); font-weight: 200; letter-spacing: 0.2em;
+    font-size: clamp(1.2rem, 4vw, 1.8rem); text-transform: uppercase;
+    color: var(--white); text-decoration: none; transition: opacity 0.3s;
+  }
+  .mobile-menu a:hover { opacity: 0.5; }
+  .mobile-lang {
+    display: flex; gap: 1.5rem; margin-top: 1rem;
+  }
+  .mobile-lang a {
+    font-size: 0.8rem !important; letter-spacing: 0.15em !important;
+    color: var(--gray-400) !important;
+  }
+  .mobile-lang a.active { color: var(--white) !important; }
+
+  /* ======= HERO ======= */
+  #hero {
+    position: relative; height: 100vh; min-height: 600px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--black); overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 40%, #0d0d0d 100%);
+  }
+  .hero-grain {
+    position: absolute; inset: 0; opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-size: 200px;
+  }
+  .hero-line {
+    position: absolute; left: 50%; top: 0; bottom: 0;
+    width: 1px; background: rgba(255,255,255,0.06); transform: translateX(-50%);
+  }
+  .hero-content {
+    position: relative; z-index: 2; text-align: center;
+    padding: 0 clamp(1.5rem, 5vw, 4rem);
+    max-width: 900px;
+  }
+  .hero-eyebrow {
+    font-family: var(--font-body); font-weight: 200; letter-spacing: 0.5em;
+    font-size: clamp(0.6rem, 1.5vw, 0.75rem); text-transform: uppercase;
+    color: var(--gray-400); margin-bottom: 2.5rem;
+    opacity: 0; animation: fadeUp 1s var(--transition) 0.8s forwards;
+  }
+  .hero-title {
+    font-family: var(--font-display); font-weight: 300;
+    font-size: clamp(2.8rem, 7vw, 6.5rem); line-height: 1.08;
+    color: var(--white); letter-spacing: -0.01em; margin-bottom: 2rem;
+    opacity: 0; animation: fadeUp 1s var(--transition) 1s forwards;
+  }
+  .hero-title em { font-style: italic; font-weight: 300; }
+  .hero-subtitle {
+    font-family: var(--font-jp); font-weight: 200; letter-spacing: 0.1em;
+    font-size: clamp(0.8rem, 2vw, 1rem); color: var(--gray-400);
+    margin-bottom: 3.5rem;
+    opacity: 0; animation: fadeUp 1s var(--transition) 1.2s forwards;
+  }
+  .hero-cta {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-family: var(--font-body); font-weight: 300; letter-spacing: 0.2em;
+    font-size: 0.72rem; text-transform: uppercase; text-decoration: none;
+    color: var(--white); border-bottom: 1px solid rgba(255,255,255,0.3);
+    padding-bottom: 4px; transition: all 0.3s;
+    opacity: 0; animation: fadeUp 1s var(--transition) 1.4s forwards;
+  }
+  .hero-cta:hover { border-color: var(--white); gap: 18px; }
+  .hero-scroll {
+    position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    font-family: var(--font-body); font-weight: 200; letter-spacing: 0.3em;
+    font-size: 0.6rem; text-transform: uppercase; color: var(--gray-400);
+    opacity: 0; animation: fadeUp 1s var(--transition) 1.8s forwards;
+  }
+  .hero-scroll-line {
+    width: 1px; height: 50px; background: linear-gradient(to bottom, var(--gray-400), transparent);
+    animation: scrollLine 2s ease-in-out infinite;
+  }
+  @keyframes scrollLine { 0%{transform:scaleY(0);transform-origin:top} 50%{transform:scaleY(1);transform-origin:top} 51%{transform:scaleY(1);transform-origin:bottom} 100%{transform:scaleY(0);transform-origin:bottom} }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+
+  /* ======= SECTION COMMON ======= */
+  section { position: relative; }
+  .section-inner {
+    max-width: 1200px; margin: 0 auto;
+    padding: clamp(5rem, 10vw, 10rem) clamp(1.5rem, 5vw, 4rem);
+  }
+  .section-label {
+    font-family: var(--font-body); font-weight: 200; letter-spacing: 0.4em;
+    font-size: 0.65rem; text-transform: uppercase; color: var(--gray-400);
+    margin-bottom: 1rem;
+  }
+  .section-heading {
+    font-family: var(--font-display); font-weight: 300;
+    font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+  .section-heading em { font-style: italic; }
+  .divider {
+    width: 40px; height: 1px; background: var(--gray-400); margin: 2rem 0;
+  }
+  .text-jp {
+    font-family: var(--font-jp); font-weight: 300;
+    line-height: 2; color: var(--gray-600); font-size: 0.9rem;
+  }
+  .text-en {
+    font-family: var(--font-body); font-weight: 300;
+    line-height: 1.9; color: var(--gray-600); font-size: 0.95rem;
+    letter-spacing: 0.02em;
+  }
+
+  /* Reveal animation */
+  .reveal {
+    opacity: 0; transform: translateY(32px);
+    transition: opacity 0.9s var(--transition), transform 0.9s var(--transition);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+  .reveal-delay-5 { transition-delay: 0.5s; }
+  .reveal-delay-6 { transition-delay: 0.6s; }
+
+  /* ======= TICKER ======= */
+  .ticker-wrap {
+    overflow: hidden; background: var(--black); padding: 14px 0;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .ticker {
+    display: flex; gap: 0; white-space: nowrap;
+    animation: ticker 30s linear infinite;
+  }
+  .ticker-item {
+    display: inline-flex; align-items: center; gap: 2.5rem;
+    padding: 0 2.5rem;
+    font-family: var(--font-body); font-weight: 200; letter-spacing: 0.3em;
+    font-size: 0.65rem; text-transform: uppercase; color: var(--gray-400);
+  }
+  .ticker-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--gray-600); }
+  @keyframes ticker { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+  /* ======= ABOUT ======= */
+  #about { background: var(--white); }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: clamp(3rem, 6vw, 8rem);
+    align-items: start; margin-top: 4rem;
+  }
+  .about-image-wrap {
+    position: relative; aspect-ratio: 3/4; overflow: hidden;
+    background: var(--gray-100);
+  }
+  .about-image-inner {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .about-image-text {
+    font-family: var(--font-display); font-size: clamp(4rem, 8vw, 8rem);
+    font-weight: 300; color: rgba(255,255,255,0.06); letter-spacing: -0.05em;
+    line-height: 0.9; user-select: none;
+  }
+  .about-tag {
+    position: absolute; bottom: 2rem; left: 2rem;
+    font-family: var(--font-body); font-weight: 200; letter-spacing: 0.3em;
+    font-size: 0.6rem; text-transform: uppercase; color: rgba(255,255,255,0.5);
+    border: 1px solid rgba(255,255,255,0.15); padding: 8px 14px;
+  }
+  .about-text p { margin-bottom: 1.4rem; }
+  .about-text p:first-child {
+    font-family: var(--font-display); font-weight: 400; font-style: italic;
+    font-size: clamp(1.1rem, 2vw, 1.3rem); color: var(--black); line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+  .about-lang-toggle {
+    display: flex; gap: 0; margin-bottom: 1.5rem;
+    border: 1px solid var(--gray-200); width: fit-content;
+  }
+  .about-lang-btn {
+    padding: 8px 20px; font-family: var(--font-body); font-weight: 300;
+    font-size: 0.7rem; letter-spacing: 0.1em; cursor: pointer;
+    border: none; background: transparent; color: var(--gray-400);
+    transition: all 0.3s;
+  }
+  .about-lang-btn.active { background: var(--black); color: var(--white); }
+
+  /* ======= MISSION ======= */
+  #mission { background: var(--black); }
+  .mission-inner { color: var(--white); }
+  .mission-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: clamp(3rem, 6vw, 6rem); margin-top: 4rem;
+  }
+  .mission-block { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2.5rem; }
+  .mission-block-label {
+    font-family: var(--font-body); font-weight: 200; letter-spacing: 0.4em;
+    font-size: 0.6rem; text-transform: uppercase; color: var(--gray-400);
+    margin-bottom: 1.5rem;
+  }
+  .mission-block-title {
+    font-family: var(--font-display); font-weight: 300; font-style: italic;
+    font-size: clamp(1.4rem, 3vw, 2.2rem); color: var(--white);
+    line-height: 1.3; margin-bottom: 1rem;
+  }
+  .mission-block-jp {
+    font-family: var(--font-jp); font-weight: 200; font-size: 0.85rem;
+    color: var(--gray-400); line-height: 1.9;
+  }
+  .values-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 2px; margin-top: 4rem; background: rgba(255,255,255,0.05);
+  }
+  .value-card {
+    background: var(--black); padding: clamp(1.5rem, 3vw, 2.5rem);
+    border: 1px solid rgba(255,255,255,0.06);
+    transition: background 0.3s, border-color 0.3s;
+    cursor: default;
+  }
+  .value-card:hover { background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.12); }
+  .value-num {
+    font-family: var(--font-display); font-size: 3rem; font-weight: 300;
+    color: rgba(255,255,255,0.06); line-height: 1; margin-bottom: 1rem;
+  }
+  .value-title {
+    font-family: var(--font-body); font-weight: 300; letter-spacing: 0.05em;
+    font-size: 0.9rem; color: var(--white); margin-bottom: 0.5rem;
+  }
+  .value-jp {
+    font-family: var(--font-jp); font-weight: 200; font-size: 0.78rem;
+    color: var(--gray-400); line-height: 1.6;
+  }
+  .mission-section-label { color: rgba(255,255,255,0.3); }
+  .mission-divider { background: rgba(255,255,255,0.2); }
+
+  /* ======= BUSINESS ======= */
+  #business { background: var(--gray-100); }
+  .business-intro {
+    display: grid; grid-template-columns: 1fr 1.5fr; gap: 4rem; align-items: end;
+    margin-bottom: clamp(3rem, 6vw, 5rem);
+  }
+  .business-items { display: flex; flex-direction: column; gap: 2px; }
+  .business-item {
+    background: var(--white); overflow: hidden;
+    transition: background 0.4s; cursor: pointer;
+    border-left: 2px solid transparent;
+    transition: all 0.4s var(--transition);
+  }
+  .business-item.active, .business-item:hover {
+    background: var(--black); border-left-color: var(--white);
+  }
+  .business-item-inner {
+    display: grid; grid-template-columns: 1fr auto;
+    align-items: center; padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1.5rem, 3vw, 2.5rem);
+    gap: 2rem;
+  }
+  .business-item-name {
+    font-family: var(--font-display); font-weight: 400; font-style: italic;
+    font-size: clamp(1.4rem, 3vw, 2rem); color: var(--black);
+    transition: color 0.4s;
+  }
+  .business-item.active .business-item-name,
+  .business-item:hover .business-item-name { color: var(--white); }
+  .business-item-tag {
+    font-family: var(--font-body); font-weight: 200; letter-spacing: 0.3em;
+    font-size: 0.6rem; text-transform: uppercase; color: var(--gray-400);
+    transition: color 0.4s; white-space: nowrap;
+  }
+  .business-item.active .business-item-tag,
+  .business-item:hover .business-item-tag { color: var(--gray-400); }
+  .business-item-desc {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.5s var(--transition), padding 0.3s;
+  }
+  .business-item.active .business-item-desc { max-height: 120px; }
+  .business-item-desc-inner {
+    padding: 0 clamp(1.5rem, 3vw, 2.5rem) clamp(1.5rem, 2vw, 2rem);
+    font-family: var(--font-jp); font-weight: 200; font-size: 0.85rem;
+    line-height: 1.9; color: var(--gray-400);
+  }
+  .business-item-arrow {
+    font-size: 1.2rem; color: var(--gray-400);
+    transition: transform 0.3s, color 0.3s;
+  }
+  .business-item.active .business-item-arrow,
+  .business-item:hover .business-item-arrow { color: var(--white); transform: rotate(90deg); }
+
+  /* ======= SHOP ======= */
+  #shop { background: var(--white); }
+  .shop-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1rem, 2vw, 2rem); margin-top: 3rem;
+  }
+  .shop-card {
+    text-decoration: none; color: inherit; display: block;
+    transition: transform 0.4s var(--transition);
+  }
+  .shop-card:hover { transform: translateY(-4px); }
+  .shop-card-img {
+    aspect-ratio: 3/4; background: var(--gray-100); overflow: hidden;
+    position: relative; margin-bottom: 1rem;
+  }
+  .shop-card-img-inner {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, #e8e8e8, #f4f4f4);
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.6s var(--transition);
+  }
+  .shop-card:hover .shop-card-img-inner { transform: scale(1.03); }
+  .shop-card-icon {
+    font-size: 3rem; opacity: 0.2;
+  }
+  .shop-badge {
+    position: absolute; top: 1rem; left: 1rem;
+    font-family: var(--font-body); font-weight: 300; letter-spacing: 0.2em;
+    font-size: 0.6rem; text-transform: uppercase;
+    background: var(--black); color: var(--white); padding: 5px 10px;
+  }
+  .shop-card-category {
+    font-family: var(--font-body); font-weight: 200; letter-spacing: 0.2em;
+    font-size: 0.62rem; text-transform: uppercase; color: var(--gray-400);
+    margin-bottom: 0.4rem;
+  }
+  .shop-card-name {
+    font-family: var(--font-body); font-weight: 400; font-size: 0.9rem;
+    color: var(--black); margin-bottom: 0.3rem;
+  }
+  .shop-card-name-jp {
+    font-family: var(--font-jp); font-weight: 200; font-size: 0.78rem;
+    color: var(--gray-600); margin-bottom: 0.5rem;
+  }
+  .shop-card-price {
+    font-family: var(--font-body); font-weight: 400; font-size: 0.9rem;
+    color: var(--black);
+  }
+  .shop-cta {
+    text-align: center; margin-top: clamp(3rem, 5vw, 4rem);
+  }
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-family: var(--font-body); font-weight: 300; letter-spacing: 0.2em;
+    font-size: 0.72rem; text-transform: uppercase; text-decoration: none;
+    color: var(--black); border: 1px solid var(--black); padding: 16px 32px;
+    transition: all 0.3s;
+  }
+  .btn-outline:hover { background: var(--black); color: var(--white); }
+  .btn-solid {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-family: var(--font-body); font-weight: 300; letter-spacing: 0.2em;
+    font-size: 0.72rem; text-transform: uppercase; text-decoration: none;
+    color: var(--white); background: var(--black); padding: 16px 32px;
+    border: 1px solid var(--black);
+    transition: all 0.3s;
+  }
+  .btn-solid:hover { background: transparent; color: var(--black); }
+
+  /* ======= BLOG ======= */
+  #blog { background: var(--gray-100); }
+  .blog-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: clamp(1.5rem, 3vw, 2.5rem); margin-top: 3rem;
+  }
+  .blog-card {
+    background: var(--white); text-decoration: none; color: inherit;
+    display: block; transition: transform 0.4s var(--transition);
+  }
+  .blog-card:hover { transform: translateY(-4px); }
+  .blog-card-img {
+    aspect-ratio: 16/9; background: var(--gray-200); overflow: hidden; position: relative;
+  }
+  .blog-card-img-inner {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, #d0d0d0, #e8e8e8);
+    transition: transform 0.6s var(--transition);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .blog-card:hover .blog-card-img-inner { transform: scale(1.05); }
+  .blog-card-body { padding: 1.5rem; }
+  .blog-card-cat {
+    font-family: var(--font-body); font-weight: 300; letter-spacing: 0.2em;
+    font-size: 0.6rem; text-transform: uppercase; color: var(--gray-400);
+    margin-bottom: 0.7rem;
+  }
+  .blog-card-title {
+    font-family: var(--font-body); font-weight: 400; font-size: 0.9rem;
+    color: var(--black); line-height: 1.5; margin-bottom: 0.5rem;
+  }
+  .blog-card-title-jp {
+    font-family: var(--font-jp); font-weight: 300; font-size: 0.82rem;
+    color: var(--gray-600); line-height: 1.7; margin-bottom: 1rem;
+  }
+  .blog-card-date {
+    font-family: var(--font-body); font-weight: 200; letter-spacing: 0.1em;
+    font-size: 0.65rem; color: var(--gray-400);
+  }
+
+  /* ======= COMPANY ======= */
+  #company { background: var(--white); }
+  .company-table { width: 100%; margin-top: 3rem; border-collapse: collapse; }
+  .company-table tr { border-bottom: 1px solid var(--gray-200); }
+  .company-table tr:first-child { border-top: 1px solid var(--gray-200); }
+  .company-table th {
+    font-family: var(--font-body); font-weight: 300; letter-spacing: 0.1em;
+    font-size: 0.72rem; text-transform: uppercase; color: var(--gray-400);
+    padding: 1.5rem 0; width: 200px; text-align: left; vertical-align: top;
+  }
+  .company-table td {
+    font-family: var(--font-jp); font-weight: 300; font-size: 0.9rem;
+    color: var(--black); padding: 1.5rem 0 1.5rem 2rem; line-height: 1.8;
+    vertical-align: top;
+  }
+
+  /* ======= CONTACT ======= */
+  #contact { background: var(--black); }
+  .contact-inner { text-align: center; max-width: 700px; margin: 0 auto; }
+  .contact-title {
+    font-family: var(--font-display); font-weight: 300; font-style: italic;
+    font-size: clamp(2.5rem, 6vw, 5rem); color: var(--white); margin-bottom: 1.5rem;
+  }
+  .contact-subtitle {
+    font-family: var(--font-jp); font-weight: 200; font-size: 0.9rem;
+    color: var(--gray-400); line-height: 2; margin-bottom: 3.5rem;
+  }
+  .contact-form { text-align: left; }
+  .form-group { margin-bottom: 1.5rem; }
+  .form-label {
+    display: block; font-family: var(--font-body); font-weight: 200;
+    letter-spacing: 0.15em; font-size: 0.65rem; text-transform: uppercase;
+    color: var(--gray-400); margin-bottom: 0.5rem;
+  }
+  .form-input, .form-textarea, .form-select {
+    width: 100%; background: transparent;
+    border: none; border-bottom: 1px solid rgba(255,255,255,0.2);
+    padding: 12px 0; font-family: var(--font-body); font-weight: 300;
+    font-size: 0.9rem; color: var(--white); outline: none;
+    transition: border-color 0.3s;
+  }
+  .form-input::placeholder, .form-textarea::placeholder { color: var(--gray-600); }
+  .form-input:focus, .form-textarea:focus, .form-select:focus { border-color: var(--white); }
+  .form-select { cursor: pointer; }
+  .form-select option { background: var(--black); }
+  .form-textarea { resize: none; height: 100px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .form-submit {
+    width: 100%; margin-top: 2.5rem; padding: 18px;
+    font-family: var(--font-body); font-weight: 300; letter-spacing: 0.3em;
+    font-size: 0.72rem; text-transform: uppercase;
+    background: var(--white); color: var(--black); border: none; cursor: pointer;
+    transition: all 0.3s;
+  }
+  .form-submit:hover { background: var(--gray-200); }
+
+  /* ======= FOOTER ======= */
+  footer {
+    background: var(--black); border-top: 1px solid rgba(255,255,255,0.06);
+    padding: clamp(3rem, 6vw, 5rem) clamp(1.5rem, 5vw, 4rem) clamp(2rem, 4vw, 3rem);
+  }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem;
+  }
+  .footer-logo {
+    font-family: var(--font-body); font-weight: 200; letter-spacing: 0.2em;
+    font-size: 1.1rem; color: var(--white); margin-bottom: 1rem;
+    display: block;
+  }
+  .footer-tagline {
+    font-family: var(--font-body); font-weight: 200; letter-spacing: 0.05em;
+    font-size: 0.78rem; color: var(--gray-600); line-height: 1.8;
+    margin-bottom: 1.5rem;
+  }
+  .footer-col-title {
+    font-family: var(--font-body); font-weight: 300; letter-spacing: 0.2em;
+    font-size: 0.62rem; text-transform: uppercase; color: var(--gray-600);
+    margin-bottom: 1.2rem;
+  }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; }
+  .footer-links a {
+    font-family: var(--font-body); font-weight: 200; font-size: 0.82rem;
+    color: var(--gray-400); text-decoration: none; letter-spacing: 0.05em;
+    transition: color 0.3s;
+  }
+  .footer-links a:hover { color: var(--white); }
+  .footer-bottom {
+    max-width: 1200px; margin: 3rem auto 0;
+    padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.06);
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-copy {
+    font-family: var(--font-body); font-weight: 200; letter-spacing: 0.05em;
+    font-size: 0.7rem; color: var(--gray-600);
+  }
+  .footer-bottom-links { display: flex; gap: 2rem; }
+  .footer-bottom-links a {
+    font-family: var(--font-body); font-weight: 200; font-size: 0.7rem;
+    color: var(--gray-600); text-decoration: none; transition: color 0.3s;
+  }
+  .footer-bottom-links a:hover { color: var(--white); }
+
+  /* ======= MODAL (Shop) ======= */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 2000;
+    opacity: 0; visibility: hidden; transition: all 0.4s var(--transition);
+    display: flex; align-items: center; justify-content: center; padding: 2rem;
+  }
+  .modal-overlay.open { opacity: 1; visibility: visible; }
+  .modal {
+    background: var(--white); max-width: 500px; width: 100%;
+    padding: clamp(2rem, 4vw, 3rem); position: relative;
+    transform: translateY(20px); transition: transform 0.4s var(--transition);
+  }
+  .modal-overlay.open .modal { transform: translateY(0); }
+  .modal-close {
+    position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none;
+    cursor: pointer; font-size: 1.2rem; color: var(--gray-600); line-height: 1;
+  }
+  .modal-title {
+    font-family: var(--font-display); font-weight: 400; font-style: italic;
+    font-size: 1.8rem; margin-bottom: 0.5rem;
+  }
+  .modal-subtitle {
+    font-family: var(--font-jp); font-weight: 200; font-size: 0.82rem;
+    color: var(--gray-600); margin-bottom: 1.5rem;
+  }
+  .modal-p {
+    font-family: var(--font-jp); font-weight: 200; font-size: 0.85rem;
+    color: var(--gray-600); line-height: 1.9; margin-bottom: 2rem;
+  }
+
+  /* ======= RESPONSIVE ======= */
+  @media (max-width: 1024px) {
+    .about-grid { grid-template-columns: 1fr; }
+    .about-image-wrap { aspect-ratio: 16/9; }
+    .mission-grid { grid-template-columns: 1fr; }
+    .values-grid { grid-template-columns: repeat(2, 1fr); }
+    .business-intro { grid-template-columns: 1fr; }
+    .footer-inner { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .lang-selector { display: none; }
+    .hamburger { display: flex; }
+    .shop-grid { grid-template-columns: repeat(2, 1fr); }
+    .blog-grid { grid-template-columns: 1fr; }
+    .values-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .footer-inner { grid-template-columns: 1fr; }
+    .footer-bottom { flex-direction: column; align-items: flex-start; }
+    .company-table th { width: 120px; font-size: 0.65rem; }
+  }
+  @media (max-width: 480px) {
+    .shop-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Utility */
+  .mt-1 { margin-top: 1rem; }
+  .mt-2 { margin-top: 2rem; }
+  .mt-3 { margin-top: 3rem; }
+  .text-center { text-align: center; }
+
+  /* Language hidden states */
+  [data-lang]:not(.lang-visible) { display: none; }
+  [data-lang].lang-visible { display: block; }
+  [data-lang="jp"].lang-visible { display: block; }
+
+  /* SEO Blog Article page simulation */
+  .blog-tag {
+    display: inline-block; padding: 4px 10px;
+    font-family: var(--font-body); font-weight: 300; letter-spacing: 0.15em;
+    font-size: 0.6rem; text-transform: uppercase;
+    border: 1px solid var(--gray-200); color: var(--gray-600);
+    margin-right: 6px; margin-bottom: 6px;
+  }
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader"><span class="loader-text">interlink</span></div>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="closeMobile()">About</a>
+  <a href="#mission" onclick="closeMobile()">Mission</a>
+  <a href="#business" onclick="closeMobile()">Business</a>
+  <a href="#shop" onclick="closeMobile()">Shop</a>
+  <a href="#blog" onclick="closeMobile()">Journal</a>
+  <a href="#company" onclick="closeMobile()">Company</a>
+  <a href="#contact" onclick="closeMobile()">Contact</a>
+  <div class="mobile-lang">
+    <a href="#" class="active" onclick="setLang('ja',this);closeMobile()">JP</a>
+    <a href="#" onclick="setLang('en',this);closeMobile()">EN</a>
+    <a href="#" onclick="setLang('zh',this);closeMobile()">中</a>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav id="nav" class="dark">
+  <a href="#hero" class="nav-logo">interlink</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#mission">Mission</a></li>
+    <li><a href="#business">Business</a></li>
+    <li><a href="#shop">Shop</a></li>
+    <li><a href="#blog">Journal</a></li>
+    <li><a href="#company">Company</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="lang-selector">
+    <div class="lang-current" id="langCurrent">
+      <span id="langLabel">JP</span>
+      <svg viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.2"/></svg>
+    </div>
+    <div class="lang-dropdown">
+      <a href="#" class="active" onclick="setLang('ja',this)">日本語 (JP)</a>
+      <a href="#" onclick="setLang('en',this)">English (EN)</a>
+      <a href="#" onclick="setLang('zh',this)">中文 (ZH)</a>
+    </div>
+  </div>
+  <button class="hamburger" id="hamburger" onclick="toggleMobile()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grain"></div>
+  <div class="hero-line"></div>
+  <div class="hero-content">
+
+    <h1 class="hero-title">We design<br><em>lifestyles</em><br>through business.</h1>
+    <p class="hero-subtitle" data-lang="ja" style="display:block">ビジネスを通じて、ライフスタイルをデザインする。</p>
+    <p class="hero-subtitle" data-lang="en">We create environments and opportunities for everyone to live on their own terms.</p>
+    <p class="hero-subtitle" data-lang="zh">通过商业，设计生活方式。</p>
+    <a href="#about" class="hero-cta">Discover Our Story →</a>
+  </div>
+  <div class="hero-scroll">
+    <div class="hero-scroll-line"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <div class="ticker-item">Lifestyle <span class="ticker-dot"></span></div>
+    <div class="ticker-item">Wellness <span class="ticker-dot"></span></div>
+    <div class="ticker-item">Hospitality <span class="ticker-dot"></span></div>
+    <div class="ticker-item">Platform <span class="ticker-dot"></span></div>
+    <div class="ticker-item">Global Mindset <span class="ticker-dot"></span></div>
+    <div class="ticker-item">Empower People <span class="ticker-dot"></span></div>
+    <div class="ticker-item">Freedom Driven <span class="ticker-dot"></span></div>
+    <div class="ticker-item">Ownership <span class="ticker-dot"></span></div>
+    <div class="ticker-item">Value First <span class="ticker-dot"></span></div>
+    <div class="ticker-item">Connection <span class="ticker-dot"></span></div>
+    <!-- duplicate for seamless loop -->
+    <div class="ticker-item">Lifestyle <span class="ticker-dot"></span></div>
+    <div class="ticker-item">Wellness <span class="ticker-dot"></span></div>
+    <div class="ticker-item">Hospitality <span class="ticker-dot"></span></div>
+    <div class="ticker-item">Platform <span class="ticker-dot"></span></div>
+    <div class="ticker-item">Global Mindset <span class="ticker-dot"></span></div>
+    <div class="ticker-item">Empower People <span class="ticker-dot"></span></div>
+    <div class="ticker-item">Freedom Driven <span class="ticker-dot"></span></div>
+    <div class="ticker-item">Ownership <span class="ticker-dot"></span></div>
+    <div class="ticker-item">Value First <span class="ticker-dot"></span></div>
+    <div class="ticker-item">Connection <span class="ticker-dot"></span></div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <p class="section-label reveal">About</p>
+    <h2 class="section-heading reveal reveal-delay-1">Our <em>Story</em></h2>
+    <div class="divider reveal reveal-delay-2"></div>
+    <div class="about-grid">
+      <div class="about-image-wrap reveal reveal-delay-1">
+        <div class="about-image-inner">
+          <div class="about-image-text">inter<br>link</div>
+        </div>
+
+      </div>
+      <div class="about-text reveal reveal-delay-2">
+        <div class="about-lang-toggle">
+          <button class="about-lang-btn active" onclick="toggleAboutLang('ja',this)">JP</button>
+          <button class="about-lang-btn" onclick="toggleAboutLang('en',this)">EN</button>
+          <button class="about-lang-btn" onclick="toggleAboutLang('zh',this)">中</button>
+        </div>
+
+        <!-- JP -->
+        <div id="about-ja">
+          <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.1rem,2vw,1.3rem);color:#0a0a0a;line-height:1.7;margin-bottom:2rem;">
+            私たちは、ライフスタイルこそが<br>人生の質を決定すると考えています。
+          </p>
+          <p class="text-jp">美容や健康、空間や体験、働き方や機会。これらはすべて、人がどのように生きるかを形づくる重要な要素です。</p>
+          <p class="text-jp">しかし現代では、自分に合った環境がない、選択肢が限られている、本来の可能性を発揮できていない、といった課題が多く存在します。</p>
+          <p class="text-jp">私たちはその原因を、個人の問題ではなく、<strong>機会・環境・仕組みの不足</strong>にあると捉えました。だからこそ、それらを"事業として"創ることを選びました。</p>
+          <p class="text-jp">当社の中核となるのは、<strong>Lifestyle領域</strong>です。価値観・美意識・生き方といった人生の軸を起点に、一人ひとりの可能性と選択肢を広げていきます。そしてその思想を具体的な価値として提供するために、身体と心の質を高める<strong>Wellness事業</strong>、人と人が繋がり価値を生む<strong>Hospitality事業</strong>、人材・不動産・仕組みによって機会を提供する<strong>Platform事業</strong>を展開しています。</p>
+          <p class="text-jp">関わるすべての人が、自分の価値観に基づいて人生を選び、自分らしいライフスタイルを実現できる状態をつくること。その価値を、日本だけでなく世界に広げていきます。</p>
+        </div>
+        <!-- EN -->
+        <div id="about-en" style="display:none">
+          <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.1rem,2vw,1.3rem);color:#0a0a0a;line-height:1.7;margin-bottom:2rem;">
+            We believe that lifestyle<br>defines the quality of life.
+          </p>
+          <p class="text-en">Beauty, health, space, experience, work, and opportunity — all of these elements shape how people live.</p>
+          <p class="text-en">Yet today, many individuals face limitations: a lack of suitable environments, limited choices, and untapped potential.</p>
+          <p class="text-en">We saw that the problem was not individual effort, but the absence of <strong>systems, environments, and opportunities</strong>. So we chose to build them through business.</p>
+          <p class="text-en">Our goal is not simply to provide services, but to enable people to design their own lives — and ultimately, to expand this value globally.</p>
+        </div>
+        <!-- ZH -->
+        <div id="about-zh" style="display:none">
+          <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.1rem,2vw,1.3rem);color:#0a0a0a;line-height:1.7;margin-bottom:2rem;">
+            我们相信，生活方式<br>决定了生命的质量。
+          </p>
+          <p class="text-jp">美容、健康、空间、体验、工作方式与机会——这些都是塑造人们生活方式的重要元素。</p>
+          <p class="text-jp">然而在当今时代，许多人面临着缺乏合适环境、选择有限、无法发挥潜力的困境。</p>
+          <p class="text-jp">我们认为根本原因不在于个人，而在于<strong>机会、环境和体制的缺失</strong>。因此，我们选择通过商业来创造这些。</p>
+          <p class="text-jp">我们的目标不仅仅是提供服务，而是让每一个相关的人都能根据自己的价值观选择人生，并将这种价值扩展到全球。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION / VISION / VALUE -->
+<section id="mission">
+  <div class="section-inner mission-inner">
+    <p class="section-label reveal mission-section-label">Philosophy</p>
+    <h2 class="section-heading reveal reveal-delay-1" style="color:var(--white)">Mission &amp; <em>Values</em></h2>
+    <div class="divider reveal reveal-delay-2 mission-divider"></div>
+
+    <div class="mission-grid">
+      <div class="mission-block reveal reveal-delay-2">
+        <p class="mission-block-label">Mission — 存在意義</p>
+        <p class="mission-block-title">We design lifestyles<br>through business.</p>
+        <p class="mission-block-jp">ビジネスを通じて、<br>ライフスタイルをデザインする。</p>
+      </div>
+      <div class="mission-block reveal reveal-delay-3">
+        <p class="mission-block-label">Vision — 目指す未来</p>
+        <p class="mission-block-title">To build a global platform for lifestyle business and human empowerment.</p>
+        <p class="mission-block-jp">ライフスタイルと人の可能性を最大化する、グローバルな基盤となる。</p>
+      </div>
+    </div>
+
+    <div class="values-grid mt-3">
+      <div class="value-card reveal reveal-delay-1">
+        <div class="value-num">01</div>
+        <div class="value-title">Empower People</div>
+        <div class="value-jp">人の可能性を最大化する</div>
+      </div>
+      <div class="value-card reveal reveal-delay-2">
+        <div class="value-num">02</div>
+        <div class="value-title">Freedom Driven</div>
+        <div class="value-jp">自由かつ自立した意思決定</div>
+      </div>
+      <div class="value-card reveal reveal-delay-3">
+        <div class="value-num">03</div>
+        <div class="value-title">Ownership</div>
+        <div class="value-jp">主体性を持って取り組む</div>
+      </div>
+      <div class="value-card reveal reveal-delay-4">
+        <div class="value-num">04</div>
+        <div class="value-title">Value First</div>
+        <div class="value-jp">常に価値から逆算する</div>
+      </div>
+      <div class="value-card reveal reveal-delay-5">
+        <div class="value-num">05</div>
+        <div class="value-title">Connection</div>
+        <div class="value-jp">繋がりを広げ、価値を生む</div>
+      </div>
+      <div class="value-card reveal reveal-delay-6">
+        <div class="value-num">06</div>
+        <div class="value-title">Global Mindset</div>
+        <div class="value-jp">世界基準で考える</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BUSINESS -->
+<section id="business">
+  <div class="section-inner">
+    <div class="business-intro">
+      <div>
+        <p class="section-label reveal">Business</p>
+        <h2 class="section-heading reveal reveal-delay-1">Our <em>Domains</em></h2>
+        <div class="divider reveal reveal-delay-2"></div>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <p class="text-jp">4つの事業領域を横断的に組み合わせることで、個人・企業の双方に対して、より良い環境と選択肢を提供します。</p>
+        <p class="text-en mt-1" style="font-size:0.85rem;color:#aaa">By integrating four business domains, we create ecosystems where individuals and organizations can access better choices and environments.</p>
+      </div>
+    </div>
+    <div class="business-items">
+      <div class="business-item active reveal" onclick="toggleBusiness(this)">
+        <div class="business-item-inner">
+          <div>
+            <div class="business-item-name">Lifestyle</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:1.5rem">
+            <span class="business-item-tag">世界観・ライフスタイル</span>
+            <span class="business-item-arrow">›</span>
+          </div>
+        </div>
+        <div class="business-item-desc">
+          <div class="business-item-desc-inner">アパレル・雑貨等ライフスタイル商品の販売、コンサルティング。価値観・美意識・生き方を軸に、一人ひとりの可能性と選択肢を広げます。<br><span style="color:#666;font-size:0.78rem">Apparel, lifestyle goods sales and consulting — expanding individual possibilities through values and aesthetics.</span></div>
+        </div>
+      </div>
+      <div class="business-item reveal reveal-delay-1" onclick="toggleBusiness(this)">
+        <div class="business-item-inner">
+          <div>
+            <div class="business-item-name">Wellness</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:1.5rem">
+            <span class="business-item-tag">美容・健康</span>
+            <span class="business-item-arrow">›</span>
+          </div>
+        </div>
+        <div class="business-item-desc">
+          <div class="business-item-desc-inner">美容サロン、フィットネスなどの店舗運営や関連品の販売。身体と心の質を高め、より豊かな毎日を実現します。<br><span style="color:#666;font-size:0.78rem">Beauty salons, fitness studios, and related product sales — enhancing physical and mental well-being.</span></div>
+        </div>
+      </div>
+      <div class="business-item reveal reveal-delay-2" onclick="toggleBusiness(this)">
+        <div class="business-item-inner">
+          <div>
+            <div class="business-item-name">Hospitality</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:1.5rem">
+            <span class="business-item-tag">体験・空間</span>
+            <span class="business-item-arrow">›</span>
+          </div>
+        </div>
+        <div class="business-item-desc">
+          <div class="business-item-desc-inner">飲食店舗の運営や関連品の販売、イベントやコミュニティ運営。人と人が繋がり、新たな価値を生む場を創ります。<br><span style="color:#666;font-size:0.78rem">Restaurant operations, related products, and event / community management — creating spaces where people connect and value is born.</span></div>
+        </div>
+      </div>
+      <div class="business-item reveal reveal-delay-3" onclick="toggleBusiness(this)">
+        <div class="business-item-inner">
+          <div>
+            <div class="business-item-name">Platform</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:1.5rem">
+            <span class="business-item-tag">人・場所・仕組み</span>
+            <span class="business-item-arrow">›</span>
+          </div>
+        </div>
+        <div class="business-item-desc">
+          <div class="business-item-desc-inner">人材斡旋・育成／不動産売買仲介。仕組みと機会を提供することで、個人と企業の可能性を最大化します。<br><span style="color:#666;font-size:0.78rem">Talent placement &amp; development, real estate brokerage — providing opportunities through talent, systems, and infrastructure.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SHOP -->
+<section id="shop">
+  <div class="section-inner">
+    <p class="section-label reveal">Online Shop</p>
+    <h2 class="section-heading reveal reveal-delay-1">Lifestyle <em>Collection</em></h2>
+    <div class="divider reveal reveal-delay-2"></div>
+    <p class="text-jp reveal reveal-delay-2">interlinkのライフスタイルコレクション。厳選されたアパレル・雑貨をお届けします。</p>
+
+    <div class="shop-grid mt-2">
+      <a href="#" class="shop-card reveal reveal-delay-1" onclick="openShopModal(event)">
+        <div class="shop-card-img">
+          <div class="shop-card-img-inner">
+            <span class="shop-card-icon">◈</span>
+          </div>
+          <span class="shop-badge">New</span>
+        </div>
+        <div class="shop-card-category">Lifestyle — Apparel</div>
+        <div class="shop-card-name">Minimal Tote Bag</div>
+        <div class="shop-card-name-jp">ミニマルトートバッグ</div>
+        <div class="shop-card-price">¥12,800</div>
+      </a>
+      <a href="#" class="shop-card reveal reveal-delay-2" onclick="openShopModal(event)">
+        <div class="shop-card-img">
+          <div class="shop-card-img-inner">
+            <span class="shop-card-icon">◇</span>
+          </div>
+        </div>
+        <div class="shop-card-category">Lifestyle — Goods</div>
+        <div class="shop-card-name">Monochrome Candle</div>
+        <div class="shop-card-name-jp">モノクロームキャンドル</div>
+        <div class="shop-card-price">¥4,200</div>
+      </a>
+      <a href="#" class="shop-card reveal reveal-delay-3" onclick="openShopModal(event)">
+        <div class="shop-card-img">
+          <div class="shop-card-img-inner">
+            <span class="shop-card-icon">○</span>
+          </div>
+          <span class="shop-badge">Best</span>
+        </div>
+        <div class="shop-card-category">Wellness — Care</div>
+        <div class="shop-card-name">Wellness Essential Kit</div>
+        <div class="shop-card-name-jp">ウェルネスエッセンシャルキット</div>
+        <div class="shop-card-price">¥18,000</div>
+      </a>
+    </div>
+    <div class="shop-cta reveal">
+      <a href="#" class="btn-outline" onclick="openShopModal(event)">View All Products →</a>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section id="blog">
+  <div class="section-inner">
+    <p class="section-label reveal">Journal</p>
+    <h2 class="section-heading reveal reveal-delay-1">Latest <em>Stories</em></h2>
+    <div class="divider reveal reveal-delay-2"></div>
+    <p class="text-jp reveal reveal-delay-2">ライフスタイル、ウェルネス、ビジネスインサイトを発信します。</p>
+
+    <div class="blog-grid mt-2">
+      <a href="#" class="blog-card reveal reveal-delay-1">
+        <div class="blog-card-img">
+          <div class="blog-card-img-inner">
+            <span style="font-size:2.5rem;opacity:0.2">✦</span>
+          </div>
+        </div>
+        <div class="blog-card-body">
+          <div class="blog-card-cat">Lifestyle</div>
+          <div class="blog-card-title">The Art of Minimalist Living in Modern Japan</div>
+          <div class="blog-card-title-jp">現代日本におけるミニマリストな生き方のアート</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:0.8rem">
+            <span class="blog-tag">Lifestyle</span>
+            <span class="blog-tag">Minimalism</span>
+            <span class="blog-tag">Japan</span>
+          </div>
+          <div class="blog-card-date">2024.03.15</div>
+        </div>
+      </a>
+      <a href="#" class="blog-card reveal reveal-delay-2">
+        <div class="blog-card-img">
+          <div class="blog-card-img-inner" style="background:linear-gradient(135deg,#c8c8c8,#e0e0e0)">
+            <span style="font-size:2.5rem;opacity:0.2">◈</span>
+          </div>
+        </div>
+        <div class="blog-card-body">
+          <div class="blog-card-cat">Wellness</div>
+          <div class="blog-card-title">Building a Sustainable Wellness Routine for Busy Professionals</div>
+          <div class="blog-card-title-jp">忙しいプロフェッショナルのための持続可能なウェルネスルーティン</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:0.8rem">
+            <span class="blog-tag">Wellness</span>
+            <span class="blog-tag">Productivity</span>
+          </div>
+          <div class="blog-card-date">2024.03.08</div>
+        </div>
+      </a>
+      <a href="#" class="blog-card reveal reveal-delay-3">
+        <div class="blog-card-img">
+          <div class="blog-card-img-inner" style="background:linear-gradient(135deg,#1a1a1a,#333)">
+            <span style="font-size:2.5rem;opacity:0.15;color:#fff">◇</span>
+          </div>
+        </div>
+        <div class="blog-card-body">
+          <div class="blog-card-cat">Business Insight</div>
+          <div class="blog-card-title">Why Lifestyle Businesses Are the Future of Global Commerce</div>
+          <div class="blog-card-title-jp">ライフスタイルビジネスがグローバル商業の未来である理由</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:0.8rem">
+            <span class="blog-tag">Business</span>
+            <span class="blog-tag">Global</span>
+            <span class="blog-tag">Strategy</span>
+          </div>
+          <div class="blog-card-date">2024.02.28</div>
+        </div>
+      </a>
+    </div>
+    <div class="shop-cta reveal">
+      <a href="#" class="btn-outline">View All Articles →</a>
+    </div>
+  </div>
+</section>
+
+<!-- COMPANY -->
+<section id="company">
+  <div class="section-inner">
+    <p class="section-label reveal">Company</p>
+    <h2 class="section-heading reveal reveal-delay-1">会社<em>概要</em></h2>
+    <div class="divider reveal reveal-delay-2"></div>
+    <table class="company-table reveal">
+      <tr><th>会社名</th><td>株式会社interlink</td></tr>
+      <tr><th>英語名</th><td>interlink Co.,Ltd</td></tr>
+      <tr><th>代表者</th><td>代表取締役社長　堀江雄基</td></tr>
+      <tr><th>事業内容</th><td>生活関連商品の企画開発〜販売、サービスの提供</td></tr>
+      <tr><th>所在地</th><td>本店：〒510-0244　三重県鈴鹿市白子町2918-1<br>東京：〒103-0014　東京都日本橋蛎殻町1-35-2 GRAINZビル7F 71号</td></tr>
+      <tr><th>設立</th><td>2023年</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="contact-inner">
+      <p class="section-label reveal" style="color:rgba(255,255,255,0.3)">Contact</p>
+      <h2 class="contact-title reveal reveal-delay-1"><em>Let's Connect</em></h2>
+      <p class="contact-subtitle reveal reveal-delay-2">
+        ご質問・お問い合わせは下記フォームよりお気軽にどうぞ。<br>
+        <span style="font-size:0.8rem;opacity:0.7">Feel free to reach out for any inquiries or collaborations.</span>
+      </p>
+      <form class="contact-form reveal reveal-delay-3" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Name / お名前 *</label>
+            <input type="text" class="form-input" placeholder="Your name" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Company / 会社名</label>
+            <input type="text" class="form-input" placeholder="Company name">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email / メールアドレス *</label>
+          <input type="email" class="form-input" placeholder="your@email.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Subject / お問い合わせ種別</label>
+          <select class="form-select form-input">
+            <option value="">選択してください / Please select</option>
+            <option value="lifestyle">Lifestyle事業について</option>
+            <option value="wellness">Wellness事業について</option>
+            <option value="hospitality">Hospitality事業について</option>
+            <option value="platform">Platform事業について</option>
+            <option value="shop">オンラインショップについて</option>
+            <option value="media">取材・メディアについて</option>
+            <option value="other">その他 / Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Message / メッセージ *</label>
+          <textarea class="form-textarea" placeholder="Your message..." required></textarea>
+        </div>
+        <button type="submit" class="form-submit">Send Message — 送信する</button>
+      </form>
+      <div id="formSuccess" style="display:none;text-align:center;padding:2rem 0">
+        <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.8rem;color:#fff;margin-bottom:0.5rem">Thank you.</p>
+        <p style="font-family:'Noto Sans JP',sans-serif;font-weight:200;font-size:0.85rem;color:#aaa">お問い合わせありがとうございます。担当者より折り返しご連絡いたします。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <span class="footer-logo">interlink</span>
+      <p class="footer-tagline">We design lifestyles through business.<br>ビジネスを通じて、ライフスタイルをデザインする。</p>
+    </div>
+    <div>
+      <p class="footer-col-title">Navigation</p>
+      <ul class="footer-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#mission">Mission</a></li>
+        <li><a href="#business">Business</a></li>
+        <li><a href="#company">Company</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-col-title">Services</p>
+      <ul class="footer-links">
+        <li><a href="#shop">Online Shop</a></li>
+        <li><a href="#blog">Journal</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-col-title">Social</p>
+      <ul class="footer-links">
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">X (Twitter)</a></li>
+        <li><a href="#">LinkedIn</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2024 interlink Co.,Ltd All rights reserved.</p>
+    <div class="footer-bottom-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Use</a>
+      <a href="#">特定商取引法</a>
+    </div>
+  </div>
+</footer>
+
+<!-- SHOP MODAL -->
+<div class="modal-overlay" id="shopModal" onclick="closeShopModal(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="document.getElementById('shopModal').classList.remove('open')">✕</button>
+    <p class="modal-title"><em>Coming Soon</em></p>
+    <p class="modal-subtitle">オンラインショップ — 近日公開予定</p>
+    <p class="modal-p">interlinkのオンラインショップは現在準備中です。厳選されたライフスタイルアイテムを間もなくお届けします。<br><br>Our online shop is currently under development. Subscribe to be the first to know when we launch.</p>
+    <div class="form-group" style="margin-bottom:0">
+      <label class="form-label" style="color:#aaa">Email for Updates</label>
+      <input type="email" class="form-input" placeholder="your@email.com" style="border-color:#ddd">
+    </div>
+    <button onclick="document.getElementById('shopModal').classList.remove('open')" class="btn-solid" style="width:100%;margin-top:1.5rem;justify-content:center">Notify Me</button>
+  </div>
+</div>
+
+<script>
+// LOADER
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('loader').classList.add('hidden');
+  }, 1200);
+});
+
+// NAV SCROLL
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 80) {
+    nav.classList.add('scrolled');
+    nav.classList.remove('dark');
+  } else {
+    nav.classList.remove('scrolled');
+    nav.classList.add('dark');
+  }
+});
+
+// MOBILE MENU
+let mobileOpen = false;
+function toggleMobile() {
+  mobileOpen = !mobileOpen;
+  document.getElementById('mobileMenu').classList.toggle('open', mobileOpen);
+  document.getElementById('hamburger').classList.toggle('open', mobileOpen);
+}
+function closeMobile() {
+  mobileOpen = false;
+  document.getElementById('mobileMenu').classList.remove('open');
+  document.getElementById('hamburger').classList.remove('open');
+}
+
+// REVEAL ON SCROLL
+const revealEls = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+  });
+}, { threshold: 0.1 });
+revealEls.forEach(el => observer.observe(el));
+
+// BUSINESS ACCORDION
+function toggleBusiness(el) {
+  const items = document.querySelectorAll('.business-item');
+  items.forEach(item => item.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// ABOUT LANG TOGGLE
+function toggleAboutLang(lang, btn) {
+  document.getElementById('about-ja').style.display = 'none';
+  document.getElementById('about-en').style.display = 'none';
+  document.getElementById('about-zh').style.display = 'none';
+  document.getElementById('about-' + lang).style.display = 'block';
+  document.querySelectorAll('.about-lang-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// LANGUAGE SWITCHER
+let currentLang = 'ja';
+function setLang(lang, el) {
+  currentLang = lang;
+  const labels = { ja: 'JP', en: 'EN', zh: '中' };
+  document.getElementById('langLabel').textContent = labels[lang];
+  
+  // Update active states in dropdown
+  document.querySelectorAll('.lang-dropdown a').forEach(a => a.classList.remove('active'));
+  if (el) el.classList.add('active');
+
+  // Toggle hero subtitle
+  document.querySelectorAll('[data-lang]').forEach(el => {
+    if (el.getAttribute('data-lang') === lang) {
+      el.style.display = 'block';
+    } else {
+      el.style.display = 'none';
+    }
+  });
+}
+
+// SHOP MODAL
+function openShopModal(e) {
+  e.preventDefault();
+  document.getElementById('shopModal').classList.add('open');
+}
+function closeShopModal(e) {
+  if (e.target === document.getElementById('shopModal')) {
+    document.getElementById('shopModal').classList.remove('open');
+  }
+}
+
+// CONTACT FORM
+function handleSubmit(e) {
+  e.preventDefault();
+  document.querySelector('.contact-form').style.display = 'none';
+  document.getElementById('formSuccess').style.display = 'block';
+}
+
+// SMOOTH SCROLL
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+</script>
+</body>
+</html>
