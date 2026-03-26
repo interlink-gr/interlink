@@ -1144,24 +1144,24 @@
         ご質問・お問い合わせは下記フォームよりお気軽にどうぞ。<br>
         <span style="font-size:0.8rem;opacity:0.7">Feel free to reach out for any inquiries or collaborations.</span>
       </p>
-      <form class="contact-form reveal reveal-delay-3" onsubmit="handleSubmit(event)">
+      <form class="contact-form reveal reveal-delay-3" action="https://formspree.io/f/mjgpvjlz" method="POST">
         <div class="form-row">
           <div class="form-group">
             <label class="form-label">Name / お名前 *</label>
-            <input type="text" class="form-input" placeholder="Your name" required>
+            <input type="text" name="name" class="form-input" placeholder="Your name" required>
           </div>
           <div class="form-group">
             <label class="form-label">Company / 会社名</label>
-            <input type="text" class="form-input" placeholder="Company name">
+            <input type="text" name="company" class="form-input" placeholder="Company name">
           </div>
         </div>
         <div class="form-group">
           <label class="form-label">Email / メールアドレス *</label>
-          <input type="email" class="form-input" placeholder="your@email.com" required>
+          <input type="email" name="email" class="form-input" placeholder="your@email.com" required>
         </div>
         <div class="form-group">
           <label class="form-label">Subject / お問い合わせ種別</label>
-          <select class="form-select form-input">
+          <select name="subject" class="form-select form-input">
             <option value="">選択してください / Please select</option>
             <option value="lifestyle">Lifestyle事業について</option>
             <option value="wellness">Wellness事業について</option>
@@ -1174,14 +1174,10 @@
         </div>
         <div class="form-group">
           <label class="form-label">Message / メッセージ *</label>
-          <textarea class="form-textarea" placeholder="Your message..." required></textarea>
+          <textarea name="message" class="form-textarea" placeholder="Your message..." required></textarea>
         </div>
         <button type="submit" class="form-submit">Send Message — 送信する</button>
       </form>
-      <div id="formSuccess" style="display:none;text-align:center;padding:2rem 0">
-        <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.8rem;color:#fff;margin-bottom:0.5rem">Thank you.</p>
-        <p style="font-family:'Noto Sans JP',sans-serif;font-weight:200;font-size:0.85rem;color:#aaa">お問い合わせありがとうございます。担当者より折り返しご連絡いたします。</p>
-      </div>
     </div>
   </div>
 </section>
